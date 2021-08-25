@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import classes from './AuthForm.module.css';
 import { apiKey } from '../../config';
+import AuthContext from '../../store/auth-context';
 
 const AuthForm = () => {
+  const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
 
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -47,7 +49,10 @@ const AuthForm = () => {
         password: enteredPassword,
         returnSecureToken: true,
       });
-      console.log('response OK', response.data);
+      console.log('response OK', response.data.idToken);
+      // Sekmingo atsakymo vieta
+      // ivygdyti login metoda paduodant token
+      authCtx.login(response.data.idToken);
     } catch (error) {
       console.log('Catch block');
       console.log(error.response.data.error.message);

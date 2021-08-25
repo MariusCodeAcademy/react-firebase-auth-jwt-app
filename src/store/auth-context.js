@@ -13,6 +13,7 @@ export const AuthContextProvider = (props) => {
 
   const loginHandler = (token) => {
     setToken(token);
+    console.log('loginHandler ran in Provider');
   };
   const logoutHandler = () => {
     setToken(null);
