@@ -1,6 +1,12 @@
 import classes from './ProfileForm.module.css';
 
 const ProfileForm = () => {
+  // gauti input reiksme
+
+  // perimti formos valdyma
+
+  // issiusti POST request
+  //https://identitytoolkit.googleapis.com/v1/accounts:update?key=[API_KEY]
   return (
     <form className={classes.form}>
       <div className={classes.control}>
@@ -12,6 +18,6 @@ const ProfileForm = () => {
       </div>
     </form>
   );
-}
+};
 
 export default ProfileForm;
