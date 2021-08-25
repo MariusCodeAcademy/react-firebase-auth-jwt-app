@@ -10,13 +10,17 @@ const AuthForm = () => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
+    // setIsLogin(!isLogin);
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     console.log('sending');
+    setIsLoading(true);
 
     // paimti email ir password ir siusti i endpoint
     // https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
@@ -24,6 +28,7 @@ const AuthForm = () => {
     if (isLogin) {
       // Prijungti esama vartotoja
       console.log('Login action');
+      setIsLoading(false);
       return;
     }
     if (!isLogin) {
@@ -34,12 +39,20 @@ const AuthForm = () => {
       console.log('Sign up action');
       console.log(enteredEmail, enteredPassword);
       // galima validacija
-      const response = await axios.post(url, {
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      });
-      console.log('response', response);
+      try {
+        const response = await axios.post(url, {
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        });
+        console.log('response', response);
+      } catch (error) {
+        console.log('Catch block');
+        console.log(error.response.data.error.message);
+        alert('Errror: ' + error.response.data.error.message);
+      }
+
+      setIsLoading(false);
       return;
     }
     // gauti email ir slaptazodi ir pateikti issiuntimu
@@ -65,13 +78,17 @@ const AuthForm = () => {
             type='password'
             id='password'
             required
-            minLength='6'
+            minLength='3'
             value={enteredPassword}
             onChange={(event) => setEnteredPassword(event.target.value)}
           />
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          {isLoading ? (
+            <button disabled>Loading...</button>
+          ) : (
+            <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          )}
           <button
             type='button'
             className={classes.toggle}
