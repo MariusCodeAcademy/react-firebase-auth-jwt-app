@@ -16,11 +16,14 @@ const ProfileForm = () => {
 
     // issiusti POST request
     //https://identitytoolkit.googleapis.com/v1/accounts:update?key=[API_KEY]
-    sendData('https://identitytoolkit.googleapis.com/v1/accounts:update?key=', {
-      idToken: authCtx.token,
-      password: newPassword,
-      returnSecureToken: true,
-    });
+    const token = sendData(
+      'https://identitytoolkit.googleapis.com/v1/accounts:update?key=',
+      {
+        idToken: authCtx.token,
+        password: newPassword,
+        returnSecureToken: true,
+      }
+    );
   };
   return (
     <form onSubmit={submitHandler} className={classes.form}>
