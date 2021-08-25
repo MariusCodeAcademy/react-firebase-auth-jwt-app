@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import classes from './AuthForm.module.css';
 import { apiKey } from '../../config';
 import AuthContext from '../../store/auth-context';
+import { sendData } from '../../utils/http';
 
 const AuthForm = () => {
   const authCtx = useContext(AuthContext);
@@ -31,37 +32,26 @@ const AuthForm = () => {
       // Prijungti esama vartotoja
       console.log('Login action');
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-        apiKey;
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
     }
     if (!isLogin) {
       // SUkurti vartotja
       console.log('Sign up action');
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-        apiKey;
+      url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
       console.log(enteredEmail, enteredPassword);
       // galima validacija
     }
-    try {
-      const response = await axios.post(url, {
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      });
-      console.log('response OK', response.data.idToken);
-      // Sekmingo atsakymo vieta
-      // ivygdyti login metoda paduodant token
-      authCtx.login(response.data.idToken);
-    } catch (error) {
-      console.log('Catch block');
-      console.log(error.response.data.error.message);
-      alert('Error: ' + error.response.data.error.message);
+
+    const token = await sendData(url, {
+      email: enteredEmail,
+      password: enteredPassword,
+      returnSecureToken: true,
+    });
+    if (token) {
+      authCtx.login(token);
     }
 
     setIsLoading(false);
-
-    // gauti email ir slaptazodi ir pateikti issiuntimu
   };
 
   return (

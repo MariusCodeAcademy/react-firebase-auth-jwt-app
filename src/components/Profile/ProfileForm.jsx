@@ -9,14 +9,14 @@ const ProfileForm = () => {
   const [newPassword, setNewPassword] = useState('');
 
   // perimti formos valdyma
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     // galima validacija
     console.log('new pass is ', newPassword);
 
     // issiusti POST request
     //https://identitytoolkit.googleapis.com/v1/accounts:update?key=[API_KEY]
-    const token = sendData(
+    const token = await sendData(
       'https://identitytoolkit.googleapis.com/v1/accounts:update?key=',
       {
         idToken: authCtx.token,
@@ -24,6 +24,7 @@ const ProfileForm = () => {
         returnSecureToken: true,
       }
     );
+    // console.log('token after pass change', token);
   };
   return (
     <form onSubmit={submitHandler} className={classes.form}>
