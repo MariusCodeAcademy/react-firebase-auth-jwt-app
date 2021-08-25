@@ -24,37 +24,38 @@ const AuthForm = () => {
 
     // paimti email ir password ir siusti i endpoint
     // https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
-
+    let url;
     if (isLogin) {
       // Prijungti esama vartotoja
       console.log('Login action');
-      setIsLoading(false);
-      return;
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
+        apiKey;
     }
     if (!isLogin) {
       // SUkurti vartotja
-      const url =
+      console.log('Sign up action');
+      url =
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
         apiKey;
-      console.log('Sign up action');
       console.log(enteredEmail, enteredPassword);
       // galima validacija
-      try {
-        const response = await axios.post(url, {
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        });
-        console.log('response', response);
-      } catch (error) {
-        console.log('Catch block');
-        console.log(error.response.data.error.message);
-        alert('Errror: ' + error.response.data.error.message);
-      }
-
-      setIsLoading(false);
-      return;
     }
+    try {
+      const response = await axios.post(url, {
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      });
+      console.log('response OK', response.data);
+    } catch (error) {
+      console.log('Catch block');
+      console.log(error.response.data.error.message);
+      alert('Error: ' + error.response.data.error.message);
+    }
+
+    setIsLoading(false);
+
     // gauti email ir slaptazodi ir pateikti issiuntimu
   };
 
