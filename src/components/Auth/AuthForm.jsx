@@ -52,9 +52,10 @@ const AuthForm = () => {
     if (token) {
       authCtx.login(token);
       // redirect
+      setIsLoading(false);
       history.replace('/');
+      return;
     }
-
     setIsLoading(false);
   };
 
