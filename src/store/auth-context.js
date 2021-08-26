@@ -19,6 +19,7 @@ export const AuthContextProvider = (props) => {
   };
   const logoutHandler = () => {
     setToken(null);
+    localStorage.removeItem('fire-token');
   };
 
   const contextValue = {

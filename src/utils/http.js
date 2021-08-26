@@ -4,8 +4,8 @@ import { apiKey } from '../config';
 export const sendData = async (url, data) => {
   try {
     const response = await axios.post(url + apiKey, data);
-    // console.log(response.data.idToken);
-    return response.data.idToken;
+    // console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log('Catch block');
     console.log(error.response.data.error.message);
@@ -37,3 +37,9 @@ export const sendData = async (url, data) => {
 
 // pacioje contexto pradzioje pasitikrinti ar turim localstorage issaugoje
 // tokena ir jei turim panaudoti ji
+
+// sukurti nauja komponenta arba panaudoti esama (kad ir is kito projekto)
+// to komponento pagalga galima prideti i duomenu baze todo sarasa
+// sarasas prieinamas tik prisiloginusiems vartotojams
+
+// kiekvienas vartotojas turi savo indivdualu sarasa

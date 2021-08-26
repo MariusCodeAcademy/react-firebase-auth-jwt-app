@@ -18,7 +18,7 @@ const ProfileForm = () => {
 
     // issiusti POST request
     //https://identitytoolkit.googleapis.com/v1/accounts:update?key=[API_KEY]
-    const token = await sendData(
+    const { idToken: token } = await sendData(
       'https://identitytoolkit.googleapis.com/v1/accounts:update?key=',
       {
         idToken: authCtx.token,
