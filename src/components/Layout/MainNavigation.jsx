@@ -35,5 +35,7 @@ const MainNavigation = () => {
     </header>
   );
 };
+// paspaudus logout ivygdyti logout funkija is konteksto ir
+// nunaviguoti i auth komponenta
 
 export default MainNavigation;

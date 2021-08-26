@@ -5,8 +5,10 @@ import classes from './AuthForm.module.css';
 import { apiKey } from '../../config';
 import AuthContext from '../../store/auth-context';
 import { sendData } from '../../utils/http';
+import { useHistory } from 'react-router-dom';
 
 const AuthForm = () => {
+  const history = useHistory();
   const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
 
@@ -49,6 +51,8 @@ const AuthForm = () => {
     });
     if (token) {
       authCtx.login(token);
+      // redirect
+      history.replace('/');
     }
 
     setIsLoading(false);
