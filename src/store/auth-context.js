@@ -8,11 +8,13 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const [token, setToken] = useState('');
+  const weHavetokeInStorage = localStorage.getItem('fire-token');
+  const [token, setToken] = useState(weHavetokeInStorage || '');
   const isLoggedIn = !!token;
 
   const loginHandler = (token) => {
     setToken(token);
+    localStorage.setItem('fire-token', token);
     console.log('loginHandler ran in Provider');
   };
   const logoutHandler = () => {

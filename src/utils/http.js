@@ -31,3 +31,9 @@ export const sendData = async (url, data) => {
 //// hard ++
 //https://firebase.google.com/docs/auth/web/google-signin
 // pasidaryti prisijungima per google account. ijungti consoleje ir padaryti kad veiktu
+
+// panaudoti localStorage ir issaugoti userio prisijungimo informacija (token)
+// kai prisijungiam
+
+// pacioje contexto pradzioje pasitikrinti ar turim localstorage issaugoje
+// tokena ir jei turim panaudoti ji
